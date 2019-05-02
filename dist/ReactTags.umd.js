@@ -290,6 +290,15 @@
     ReactTags.prototype = Object.create( superclass && superclass.prototype );
     ReactTags.prototype.constructor = ReactTags;
 
+    ReactTags.prototype.componentDidUpdate = function componentDidUpdate (prevProps) {
+      if (prevProps.suggestions !== this.props.suggestions) {
+        var filtered = filterSuggestions(this.state.query, this.props.suggestions, this.props.suggestionsFilter);
+        var options = filtered.slice(0, this.props.maxSuggestionsLength);
+
+        this.setState({ options: options });
+      }
+    };
+
     ReactTags.prototype.onInput = function onInput (e) {
       var query = e.target.value;
 
@@ -298,10 +307,7 @@
       }
 
       if (query !== this.state.query) {
-        var filtered = filterSuggestions(query, this.props.suggestions, this.props.suggestionsFilter);
-        var options = filtered.slice(0, this.props.maxSuggestionsLength);
-
-        this.setState({ query: query, options: options });
+        this.setState({ query: query });
       }
     };
 

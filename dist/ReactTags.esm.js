@@ -245,6 +245,15 @@ class ReactTags extends React.Component {
     this.suggestions = React.createRef();
   }
 
+  componentDidUpdate (prevProps) {
+    if (prevProps.suggestions !== this.props.suggestions) {
+      const filtered = filterSuggestions(this.state.query, this.props.suggestions, this.props.suggestionsFilter);
+      const options = filtered.slice(0, this.props.maxSuggestionsLength);
+
+      this.setState({ options });
+    }
+  }
+
   onInput (e) {
     const query = e.target.value;
 
@@ -253,10 +262,7 @@ class ReactTags extends React.Component {
     }
 
     if (query !== this.state.query) {
-      const filtered = filterSuggestions(query, this.props.suggestions, this.props.suggestionsFilter);
-      const options = filtered.slice(0, this.props.maxSuggestionsLength);
-
-      this.setState({ query, options });
+      this.setState({ query });
     }
   }
 
