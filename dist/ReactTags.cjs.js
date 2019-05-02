@@ -231,7 +231,7 @@ class ReactTags extends React.Component {
       query: '',
       focused: false,
       options: [],
-      index: -1
+      index: 0
     };
 
     this.inputEventHandlers = {
@@ -301,7 +301,7 @@ class ReactTags extends React.Component {
   }
 
   onBlur () {
-    this.setState({ focused: false, index: -1 });
+    this.setState({ focused: false, index: 0 });
 
     if (this.props.onBlur) {
       this.props.onBlur();
